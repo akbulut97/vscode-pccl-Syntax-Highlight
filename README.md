@@ -1,4 +1,4 @@
-# ABB RAPID VSCode Language Support
+# AFSA ROBOTICS PCCL VSCode Language Support
 
 Language support for the ABB RAPID robot programming language.
 
