@@ -1,0 +1,30 @@
+{
+    "name": "afsa-pccl",
+    "displayName": "PCCL",
+    "description": "Language support for the ABB RAPID robot programming language",
+    "version": "0.1.1",
+    "publisher": "verbotics",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/verbotics/vscode-abb-rapid.git"
+    },
+    "engines": {
+        "vscode": "^1.28.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "pccl",
+            "aliases": ["PCCL", "pccl"],
+            "extensions": [".pcc",".prg",".sys"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "pccl",
+            "scopeName": "source.pcc",
+            "path": "./syntaxes/rapid.tmLanguage.json"
+        }]
+    }
+}
