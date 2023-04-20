@@ -2,8 +2,9 @@
     "name": "afsa-pccl",
     "displayName": "PCCL",
     "description": "Language support for the AFSA ROBOTICS PCCL",
-    "version": "0.1.1",
-    "publisher": "akbulut97",
+    "version": "0.1.2",
+    "publisher": "azizhanakbulut",
+    "icon": "resources/pccl_icon.webp",
     "repository": {
         "type": "git",
         "url": "https://github.com/akbulut97/vscode-pccl-Syntax-Highlight.git"
@@ -15,16 +16,25 @@
         "Programming Languages"
     ],
     "contributes": {
-        "languages": [{
-            "id": "pccl",
-            "aliases": ["PCCL", "pccl"],
-            "extensions": [".pcc"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "pccl",
-            "scopeName": "source.pcc",
-            "path": "./syntaxes/pccl.tmLanguage.json"
-        }]
+        "languages": [
+            {
+                "id": "pccl",
+                "aliases": [
+                    "PCCL",
+                    "pccl"
+                ],
+                "extensions": [
+                    ".pcc"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "pccl",
+                "scopeName": "source.pcc",
+                "path": "./syntaxes/pccl.tmLanguage.json"
+            }
+        ]
     }
 }
