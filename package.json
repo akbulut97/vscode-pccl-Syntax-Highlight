@@ -24,7 +24,7 @@
         "grammars": [{
             "language": "pccl",
             "scopeName": "source.pcc",
-            "path": "./syntaxes/rapid.tmLanguage.json"
+            "path": "./syntaxes/pccl.tmLanguage.json"
         }]
     }
 }
