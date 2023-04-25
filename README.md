@@ -2,7 +2,7 @@
 
 Language support for the PCCL.
 
-![screenshot](https://raw.githubusercontent.com/akbulut97/vscode-pccl-Syntax-Highlight/main/resources/PCCL_ScreenShot.PNG)
+![screenshot](https://github.com/akbulut97/vscode-pccl-Syntax-Highlight/blob/master/resources/PCCL_ScreenShot.png?raw=true)
 * [GitHub Repository]https://github.com/akbulut97/vscode-pccl-Syntax-Highlight)
 * [Issues](https://github.com/akbulut97/vscode-pccl-Syntax-Highlight/issues)
 
