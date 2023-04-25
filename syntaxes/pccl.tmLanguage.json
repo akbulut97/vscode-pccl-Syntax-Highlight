@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "PCCL",
+  "scopeName": "source.pcc",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#support"
+    },
+    {
+      "include": "#constants"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.character.pccl",
+          "match": "!.*$#;"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.pccl",
+          "match": "\\b#?[0-9]{1,4}\\b"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.pccl",
+          "match": "\\b(<00001|<00004|<00005|<00006|<00016|<00017|<00018|<00020|<00021|<00022|<00025|<00026|<00027|<00030|<00040|<00041|<00042|<00043|<00044|<00045|<00050|<00060|<00062|<00063|<00101|<00107|<00111|<00112|<00150|<00201|<00170|<00211|<00222|<00240|<00250|<00252|<00253|<00255)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "constant.character.escape.pccl",
+          "match": "\\b(00000)\\b"
+        }
+      ]
+    }
+  }
+}
