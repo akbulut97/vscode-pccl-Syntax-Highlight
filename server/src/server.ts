@@ -543,7 +543,17 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
   let m: RegExpExecArray | null;
   let syc = 0;
   let problems = 0;
- 
+  let Desc="";
+  let meanRange: Range;
+  let cmdRange: Range;
+  let p1range: Range;
+  let p2range: Range;
+  let p3range: Range;
+  let p4range: Range;
+  let p5range: Range;
+  let p6range: Range;
+  let p7range: Range;
+  let p8range: Range;
  
   const diagnostics: Diagnostic[] = [];
 
@@ -563,18 +573,18 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
       
 
       if (hasDiagnosticRelatedInformationCapability) {
-        const meanRange: Range={start: textDocument.positionAt(m.index),end:textDocument.positionAt(m.index + 54)};
-        const cmdRange: Range={start: textDocument.positionAt(m.index+1),end:textDocument.positionAt(m.index + 6)};
-        const p1range: Range={start: textDocument.positionAt(m.index+7),end:textDocument.positionAt(m.index + 12)};
-        const p2range: Range={start: textDocument.positionAt(m.index+13),end:textDocument.positionAt(m.index + 18)};
-        const p3range: Range={start: textDocument.positionAt(m.index+19),end:textDocument.positionAt(m.index + 24)};
-        const p4range: Range={start: textDocument.positionAt(m.index+25),end:textDocument.positionAt(m.index + 30)};
-        const p5range: Range={start: textDocument.positionAt(m.index+31),end:textDocument.positionAt(m.index + 36)};
-        const p6range: Range={start: textDocument.positionAt(m.index+37),end:textDocument.positionAt(m.index + 42)};
-        const p7range: Range={start: textDocument.positionAt(m.index+43),end:textDocument.positionAt(m.index + 48)};
-        const p8range: Range={start: textDocument.positionAt(m.index+49),end:textDocument.positionAt(m.index + 54)};
-        
-        const Desc= pcclTranslator.Translate(
+         meanRange={start: textDocument.positionAt(m.index),end:textDocument.positionAt(m.index + 54)};
+         cmdRange={start: textDocument.positionAt(m.index+1),end:textDocument.positionAt(m.index + 6)};
+         p1range={start: textDocument.positionAt(m.index+7),end:textDocument.positionAt(m.index + 12)};
+         p2range={start: textDocument.positionAt(m.index+13),end:textDocument.positionAt(m.index + 18)};
+         p3range={start: textDocument.positionAt(m.index+19),end:textDocument.positionAt(m.index + 24)};
+         p4range={start: textDocument.positionAt(m.index+25),end:textDocument.positionAt(m.index + 30)};
+         p5range={start: textDocument.positionAt(m.index+31),end:textDocument.positionAt(m.index + 36)};
+         p6range={start: textDocument.positionAt(m.index+37),end:textDocument.positionAt(m.index + 42)};
+         p7range={start: textDocument.positionAt(m.index+43),end:textDocument.positionAt(m.index + 48)};
+         p8range={start: textDocument.positionAt(m.index+49),end:textDocument.positionAt(m.index + 54)};
+        Desc="";
+         Desc= pcclTranslator.Translate(
           textDocument.getText(cmdRange) ,
           textDocument.getText(p1range),
           textDocument.getText(p2range),
@@ -591,7 +601,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
               uri: textDocument.uri,
               range:Object.assign({}, meanRange),
               },
-            message:"Mean: "+Desc
+            message:"Mean: "+ Desc
           },
           {
             location: {
