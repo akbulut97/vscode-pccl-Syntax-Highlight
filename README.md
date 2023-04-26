@@ -8,6 +8,10 @@ Language support for the PCCL.
 
 ## Changelog
 
+### 1.1.0
+* Added PCCL commands Meaning
+
+
 ### 1.0.1
 * Added remaining PCCL commands
 * Added Snippets
