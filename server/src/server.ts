@@ -19,8 +19,8 @@ import {
   Position,
 } from "vscode-languageserver/node";
 
-
-import { TextDocument } from "vscode-languageserver-textdocument";
+import * as pcclTranslator from "./Business/pcclTranlator";
+import { Range, TextDocument } from "vscode-languageserver-textdocument";
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -33,6 +33,8 @@ let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
 
+
+let  Desc: string;
 connection.onInitialize((params: InitializeParams) => {
   const capabilities = params.capabilities;
 
@@ -542,18 +544,13 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
   let syc = 0;
   let problems = 0;
  
-  
-
+ 
   const diagnostics: Diagnostic[] = [];
 
   pattern.forEach(function (value) {
     while ((m = value.exec(text)) && problems < settings.maxNumberOfProblems) {
       problems++;
-      const hover: Hover={contents:CMDName ,
-        range: {
-          start: textDocument.positionAt(m.index),
-          end: textDocument.positionAt(m.index + m[0].length),
-        }};
+    
       const diagnostic: Diagnostic = {
         severity: DiagnosticSeverity.Hint,
         range:  {
@@ -566,61 +563,104 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
       
 
       if (hasDiagnosticRelatedInformationCapability) {
+        const meanRange: Range={start: textDocument.positionAt(m.index),end:textDocument.positionAt(m.index + 54)};
+        const cmdRange: Range={start: textDocument.positionAt(m.index+1),end:textDocument.positionAt(m.index + 6)};
+        const p1range: Range={start: textDocument.positionAt(m.index+7),end:textDocument.positionAt(m.index + 12)};
+        const p2range: Range={start: textDocument.positionAt(m.index+13),end:textDocument.positionAt(m.index + 18)};
+        const p3range: Range={start: textDocument.positionAt(m.index+19),end:textDocument.positionAt(m.index + 24)};
+        const p4range: Range={start: textDocument.positionAt(m.index+25),end:textDocument.positionAt(m.index + 30)};
+        const p5range: Range={start: textDocument.positionAt(m.index+31),end:textDocument.positionAt(m.index + 36)};
+        const p6range: Range={start: textDocument.positionAt(m.index+37),end:textDocument.positionAt(m.index + 42)};
+        const p7range: Range={start: textDocument.positionAt(m.index+43),end:textDocument.positionAt(m.index + 48)};
+        const p8range: Range={start: textDocument.positionAt(m.index+49),end:textDocument.positionAt(m.index + 54)};
+        
+        const Desc= pcclTranslator.Translate(
+          textDocument.getText(cmdRange) ,
+          textDocument.getText(p1range),
+          textDocument.getText(p2range),
+          textDocument.getText(p3range),
+          textDocument.getText(p4range),
+          textDocument.getText(p5range),
+          textDocument.getText(p6range),
+          textDocument.getText(p7range),
+          textDocument.getText(p8range));
         diagnostic.relatedInformation = [
+         
           {
             location: {
               uri: textDocument.uri,
-              range: Object.assign({}, diagnostic.range),
-            },
-            message: message1[syc],
+              range:Object.assign({}, meanRange),
+              },
+            message:"Mean: "+Desc
           },
           {
             location: {
               uri: textDocument.uri,
-              range: Object.assign({}, diagnostic.range),
-            },
+              range:Object.assign({}, p1range),
+              },
+            message: message1[syc] 
+          },
+          {
+            location: {
+              uri: textDocument.uri,
+              range: Object.assign({},{
+                start: textDocument.positionAt(m.index+13),
+                end:textDocument.positionAt(m.index + 18)}),
+              },
             message: message2[syc],
           },
           {
             location: {
               uri: textDocument.uri,
-              range: Object.assign({}, diagnostic.range),
-            },
+              range: Object.assign({},{
+                start: textDocument.positionAt(m.index+19),
+                end:textDocument.positionAt(m.index + 23)}),
+              },
             message: message3[syc],
           },
           {
             location: {
               uri: textDocument.uri,
-              range: Object.assign({}, diagnostic.range),
-            },
+              range: Object.assign({},{
+                start: textDocument.positionAt(m.index+25),
+                end:textDocument.positionAt(m.index + 29)}),
+              },
             message: message4[syc],
           },
           {
             location: {
               uri: textDocument.uri,
-              range: Object.assign({}, diagnostic.range),
-            },
+              range: Object.assign({},{
+                start: textDocument.positionAt(m.index+31),
+                end:textDocument.positionAt(m.index + 37)}),
+              },
             message: message5[syc],
           },
           {
             location: {
               uri: textDocument.uri,
-              range: Object.assign({}, diagnostic.range),
-            },
+              range: Object.assign({},{
+                start: textDocument.positionAt(m.index+37),
+                end:textDocument.positionAt(m.index + 43)}),
+              },
             message: message6[syc],
           },
           {
             location: {
               uri: textDocument.uri,
-              range: Object.assign({}, diagnostic.range),
-            },
+              range: Object.assign({},{
+                start: textDocument.positionAt(m.index+43),
+                end:textDocument.positionAt(m.index + 49)}),
+              },
             message: message7[syc],
           },
           {
             location: {
               uri: textDocument.uri,
-              range: Object.assign({}, diagnostic.range),
-            },
+              range: Object.assign({},{
+                start: textDocument.positionAt(m.index+49),
+                end:textDocument.positionAt(m.index + 55)}),
+              },
             message: message8[syc],
           }
         ];
