@@ -7,6 +7,10 @@ Language support for the PCCL.
 * [Issues](https://github.com/akbulut97/vscode-pccl-Syntax-Highlight/issues)
 
 ## Changelog
+### 1.3.0
+* Added PCCL Bit Calculator
+* Update Snip PCCL Tables
+* Update PCCL Command Meanings
 
 ### 1.1.0
 * Added PCCL commands Meaning
