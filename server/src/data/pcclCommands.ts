@@ -1,0 +1,392 @@
+const NA = "Kullanım Dışı";
+
+export interface PcclCommandDef {
+  readonly code: string;
+  readonly name: string;
+  readonly description: string;
+  readonly params: readonly [string, string, string, string, string, string, string, string];
+}
+
+export const PCCL_COMMANDS: readonly PcclCommandDef[] = [
+  {
+    code: "00001",
+    name: "WaitTime",
+    description: "Bu komut kullanıldığında, belirli bir bekleme süresi sonrasında, sistem bir sonraki adıma ilerler.",
+    params: [
+      "Beklenilmesi gereken zaman milisaniye cinsinden yazılır.",
+      NA, NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00004",
+    name: "WaitEvent",
+    description: "Bu komut, belirli bir olayın beklenilmesi gereken yerlerde kullanılır.",
+    params: [
+      "Olay Tipi",
+      "Sinyalin Durumu(1/0)",
+      NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00005",
+    name: "WaitRobot@Home",
+    description: "Robot home pozisyonunda oluncaya kadar sistem bekletilir.",
+    params: [NA, NA, NA, NA, NA, NA, NA, NA],
+  },
+  {
+    code: "00006",
+    name: "WaitFixtureStateLow",
+    description: "Bu komut, parça varlık sensörü ve eğleyici (aktüatör) konum sensörleri\niçin fikstürlerde poka-yoke input kontrolü gerçekleştiren bir komuttur.",
+    params: [
+      "1. Blok 16DI, 1 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "1. Blok 16DI, 0 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "2. Blok 16DI, 1 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "2. Blok 16DI, 0 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "3. Blok 16DI, 1 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "3. Blok 16DI, 0 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "4. Blok 16DI, 1 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "4. Blok 16DI, 0 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+    ],
+  },
+  {
+    code: "00016",
+    name: "WaitFixtureStateLowWithCheckSafety",
+    description: "Bu komut input kontrolünün yapıldığı bir komuttur. 6 numaralı komuttan farkı\nİlgili istasyonun ışık bariyeri kırık iken, sensör uygun olsa bile ilgili adım geçilmez.\nKomutta ışık bariyerinin uygunluğu sürekli kontrol edilir.\nIşık bariyeri ve istenilen input uygun ise, bir sonraki adıma geçilir.\nSensörlerin kandırılmasını engellemek için yapılan bir komuttur.",
+    params: [
+      "1. Blok 16DI, 1 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "1. Blok 16DI, 0 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "2. Blok 16DI, 1 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "2. Blok 16DI, 0 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "3. Blok 16DI, 1 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "3. Blok 16DI, 0 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "4. Blok 16DI, 1 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+      "4. Blok 16DI, 0 olması şart olan DI bitlerinin oluşturduğu ondalık (decimal) sayı",
+    ],
+  },
+  {
+    code: "00017",
+    name: "WaitFixtureStateForSeveralDI#=1",
+    description: "Bu komut, 8 sensöre kadar DI'ların 1 olması durumunu kontrol yapar. Kontrol edilecek Inputlar,\nData1'den Data 8'e kadar olan kutulara girilir. Tek bir hatta maksimum 8 giriş kontrolü yapılabilir.",
+    params: [
+      "İstenilen input numarası yazılır.",
+      "İstenilen input numarası yazılır.",
+      "İstenilen input numarası yazılır.",
+      "İstenilen input numarası yazılır.",
+      "İstenilen input numarası yazılır.",
+      "İstenilen input numarası yazılır.",
+      "İstenilen input numarası yazılır.",
+      "İstenilen input numarası yazılır.",
+    ],
+  },
+  {
+    code: "00018",
+    name: "WaitFixtureStateForSeveralDI#=0",
+    description: "Bu komut maksimum 8 sensörün 0 olma durumunu kontrol eder. Kontrol edilecek olan Inputlar, Data1'den Data-8'e kadar olan kutulara girilir.\n Tek bir satırda maksimum 8 giriş kontrolü yapılabilir.",
+    params: [
+      "0 olması beklenen giriş numarası girilir.",
+      "0 olması beklenen giriş numarası girilir.",
+      "0 olması beklenen giriş numarası girilir.",
+      "0 olması beklenen giriş numarası girilir.",
+      "0 olması beklenen giriş numarası girilir.",
+      "0 olması beklenen giriş numarası girilir.",
+      "0 olması beklenen giriş numarası girilir.",
+      "0 olması beklenen giriş numarası girilir.",
+    ],
+  },
+  {
+    code: "00020",
+    name: "SetValveGroupState",
+    description: "Bu komut fikstürde bir valf grubu sinyal durumu oluşturmak için kullanılır.",
+    params: [
+      "1. Blok 16DO, A grubu",
+      "1. Blok 16DO, B grubu",
+      "2. Blok 16DO, C grubu",
+      "2. Blok 16DO, D grubu",
+      NA, NA, NA,
+      "Yardımcı + Başa Dön butonuna basıldığında gidilecek satır numarası yazılır.",
+    ],
+  },
+  {
+    code: "00021",
+    name: "SetValveState",
+    description: "Bu komut valflere ayrı sinyal göndermek için kullanılır.",
+    params: [
+      "Valf No",
+      "0 Orta/1 İleri/2 Geri",
+      NA, NA, NA, NA, NA,
+      "Yardımcı + Başa Dön butonuna basıldığında gidilecek satır numarası yazılır.",
+    ],
+  },
+  {
+    code: "00022",
+    name: "DoAction",
+    description: "Bu komut sistemdeki ekipmanların kontrolünü sağlar.",
+    params: [
+      "Çıkış Tipi 1 Pnömatik Perde/ 2 İç Perde/ 3 Giyotin Kapı/ 11 İş bitti Sinyali",
+      "1 Açık/ 2 Kapalı",
+      "Ms Cinsinden Çıkış Uzunluğu",
+      NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00025",
+    name: "SetValveGroupStateWithoutSafetyCheck",
+    description: "Bu komut Güvenliğe bakılmaksızın fikstürde bir valf grubu sinyal durumu oluşturmak için kullanılır.",
+    params: [
+      "1. Blok 16DO, A grubu",
+      "1. Blok 16DO, B grubu",
+      "2. Blok 16DO, C grubu",
+      "2. Blok 16DO, D grubu",
+      NA, NA, NA,
+      "Yardımcı + Başa Dön butonuna basıldığında gidilecek satır numarası yazılır.",
+    ],
+  },
+  {
+    code: "00026",
+    name: "SetValveStateWithoutSafetyCheck",
+    description: "Bu komut Güvenliğe bakılmaksızın valflere ayrı ayrı sinyal göndermek için kullanılır.",
+    params: [
+      "Valf No",
+      "0 Orta/1 İleri/2 Geri",
+      NA, NA, NA, NA, NA,
+      "Yardımcı + Başa Dön butonuna basıldığında gidilecek satır numarası yazılır.",
+    ],
+  },
+  {
+    code: "00030",
+    name: "ReturnValveAction",
+    description: "Bu komut, fikstür kapatıldığında bir hata oluşursa geri dönüş eylemini etkinleştirmek için kullanılır.\n201-240 arasındaki PCCL satırları \"Return\" eylemi için ayrılmıştır. Normal çalışma sırasında basamak sayısı 200'den fazla olmaz.\n\"Return\" eylemi için adım numarası bu bölüme yönlendirilir.",
+    params: [
+      "1. Blok 16DO, A grubu",
+      "1. Blok 16DO, B grubu",
+      "2. Blok 16DO, C grubu",
+      "2. Blok 16DO, D grubu",
+      NA, NA,
+      "Yardımcı + Başa Dön butonuna basıldığında gidilecek satır numarası yazılır.",
+      "Başa dönme işlemi yapıldıktan sonra çıkış adım numarası yazılır.",
+    ],
+  },
+  {
+    code: "00040",
+    name: "ReservePrgNoFromPCCL",
+    description: "Bu komut PCCL den robota program numarası göndermek için kullanılır.",
+    params: [
+      "Programın hangi istasyonda çalışacağı yazılır. (1-8)",
+      "Robota gönderilecek program numarası yazılır",
+      NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00041",
+    name: "ReservePrgNoFromScreen",
+    description: "Bu komut, bir program numarasını PLC ekranındaki yazılı veriden bir robota göndermek için kullanılır.",
+    params: [
+      "Programın çalışacağı yükleme istasyonu numarasına girilir. (1-8).",
+      NA, NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00042",
+    name: "WaitRobotStart",
+    description: "Bu komut kullanıdığında, satır numarası robot işleme başlayıncaya kadar değişmeyecektir.\nRobot işleme başladığında, sistem bir sonraki adıma geçer.",
+    params: [NA, NA, NA, NA, NA, NA, NA, NA],
+  },
+  {
+    code: "00043",
+    name: "WaitRobotFinish",
+    description: "Bu komut kullanıldığında, robot işlemini bitirinceye kadar satır numarası değişmeyecektir. Robot işlemi\ntamamladığında, sistem bir sonraki adıma geçer.",
+    params: [NA, NA, NA, NA, NA, NA, NA, NA],
+  },
+  {
+    code: "00044",
+    name: "WaitRobotCommand",
+    description: "Bu komut, robot ile PCCL toblosu arasında iletişim kurmak için kullanılır. Bu komutu kullanarak, valf ara\naçmaları, pozisyoner dönüşleri vb. işlemler sürecin içinde gerçekleştirilebilir.",
+    params: [
+      "Robot 1'den beklenen sayısal değer yazılır.",
+      NA, NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00045",
+    name: "SetCommandtoRobot",
+    description: "Bu komut, robot ile PCCL tablosu arasında iletişim kurmak için kullanılır. Bu komutu kullanarak, valf ara\naçmaları, pozisyoner dönüşleri vb. işlemler sürecin içinde gerçekleştirilebilir.",
+    params: [
+      "PCCL tarafından Robot 1'e gönderilecek sayısal değer girilir",
+      NA,
+      NA, NA, NA,
+      "İstasyon-6'de çalışacak robot program numarası yazılır.",
+      NA, NA,
+    ],
+  },
+  {
+    code: "00050",
+    name: "ReservePrgNoPCCLMultiTable",
+    description: "Bu komut PCCL den robota program numarası göndermek için kullanılır.",
+    params: [
+      "İstasyon-1'de çalışacak robot program numarası yazılır.",
+      "İstasyon-2'de çalışacak robot program numarası yazılır.",
+      "İstasyon-3'de çalışacak robot program numarası yazılır.",
+      "İstasyon-4'de çalışacak robot program numarası yazılır.",
+      "İstasyon-5'de çalışacak robot program numarası yazılır.",
+      NA,
+      "İstasyon-7'de çalışacak robot program numarası yazılır.",
+      "İstasyon-8'de çalışacak robot program numarası yazılır.",
+    ],
+  },
+  {
+    code: "00060",
+    name: "ReservePrgNoPCCLMultiRobot",
+    description: "Sistemde birden fazla robot var ise bu komut kullanılarak robotlara program numarası gönderilir.\nData 1'e yazılan program numarası tüm robotlara gönderilir.",
+    params: [
+      "Robot program numarası yazılır.",
+      NA, NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00062",
+    name: "WaitMultiRobotStart",
+    description: "Bu komut yazıldığında robotlar işleme başlayana kadar satır numarası değişmez ve ilgili satırda\nrobotların işleme başlaması beklenir. Sistemdeki bütün robotlar işleme başladığında bir sonraki adıma geçilir.",
+    params: [NA, NA, NA, NA, NA, NA, NA, NA],
+  },
+  {
+    code: "00063",
+    name: "WaitMultiRobotFinish",
+    description: "Bu komut yazıldığında robotlar işlemi bitirene kadar satır numarası değişmez ve ilgili satırda robotların\nişlemi bitirmesi beklenir. Robotlar işlemi bitirdiğinde bir sonraki adıma geçilir.",
+    params: [NA, NA, NA, NA, NA, NA, NA, NA],
+  },
+  {
+    code: "00101",
+    name: "InfoNote",
+    description: "Bu komut bilgi satırlarına girilir. Sistem, bu komut için hiçbir işlem yapmaz. Tablo açıldığında kolay\ntanınması için kullanılır.",
+    params: [
+      "Kullanıcının kolayca tanınması için bir numara koyun",
+      "Kullanıcının kolayca tanınması için bir numara koyun",
+      "Kullanıcının kolayca tanınması için bir numara koyun",
+      "Kullanıcının kolayca tanınması için bir numara koyun",
+      "Kullanıcının kolayca tanınması için bir numara koyun",
+      "Kullanıcının kolayca tanınması için bir numara koyun",
+      "Kullanıcının kolayca tanınması için bir numara koyun",
+      "Kullanıcının kolayca tanınması için bir numara koyun",
+    ],
+  },
+  {
+    code: "00107",
+    name: "SetClampingTime",
+    description: "Bu komut bilgi satırlarına girilir. Sistem, bu yazılı veriyi belleğe kaydeder ve bir sonraki adıma geçer.\nInput kontrollerinde sinyal arızasının kaç saniye sonra ekrana yansıtılacağı değiştirilebilir.\nKomut PCCL dosyasından çıkarılırsa, giriş hataları varsayılan olarak 3 saniye sonra ekranda görüntülenir.",
+    params: [
+      "İstenilen süre milisaniye cinsinden yazılır.",
+      NA, NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00111",
+    name: "JumpingLineOnReservationCancel",
+    description: "İlgili yükleme istasyonunda rezervasyon iptali yapıldığında gidilecek adım numarası girilir.\nBir istasyon rezervasyondayken (Başlat düğmesi sarı renkle yanar), Yardımcı + Başa Dön butonlarına\nbasıldığında, rezervasyondan çıkılır ve adım numarası bu komutta verilen satıra gönderilir.",
+    params: [
+      "Rezervasyondan çıkartıldığında gidilmesi gereken adım numarası yazılır.",
+      NA, NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00112",
+    name: "SetCycleBeginingLineInterval",
+    description: "Bu komut bilgi satırlarına girilir.\nBu komutla, operatör panellerindeki Çevrim Başı lambası yanar.",
+    params: [
+      "Adım numarası yazılır.",
+      "Adım numarası yazılır.",
+      NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00150",
+    name: "CheckWire",
+    description: "Bu komut tel besleme tokazunda tel varlığı kontrol etmek için kullanılır.",
+    params: [
+      "Kontrol Talebi",
+      "Adım numarası yazılır.",
+      NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00201",
+    name: "RotateSinglePositioner",
+    description: "İstasyonda, sisteme bağlı servo pozisyoner var ise, bu komut ile pozisyonerin istenilen değere\ndöndürülmesi sağlanır. Pozisyoner dönüşü tamamlandığında, bir sonraki satıra geçilir.",
+    params: [
+      "İstasyon Numarası",
+      NA,
+      "Derece değeri yazılır",
+      NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00211",
+    name: "InterchangeRequest",
+    description: "Sistemde, döner tabla var ise bu komut kullanılarak, istenilen yer değiştirme sağlanabilir.\nBu komut iki konum için de kullanılabilir.\nDöner tabla ekseninin 0°'ye veya 180°'ye döndürülmesi sağlanır.\nDönüş tamamlandığında bir sonraki adım numarasına geçilir.",
+    params: [
+      "11 olursa istasyonun robotlara dönmesi, 12 olursa istasyonun operatör tarafına dönmesi sağlanır.",
+      ": 1 olursa + , 2 olursa - yönde dönüş yapılır. Farklı bir sayı yazılır ise komut çalışmaz.",
+      NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00222",
+    name: "WaitInterchange",
+    description: "Sistemdeki Interchange'in yerinde olmasını beklemek için kullanılır.",
+    params: [
+      "Masa1 için 10/ Masa2 için 20/ Masa3 için 30",
+      NA, NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00240",
+    name: "GözSeçim",
+    description: "Seçilen Gözlere göre atlanacak PCCL tablosunda belirlemekte kullanılır.",
+    params: [
+      "1.Göz Atlanacak Tablo no",
+      "2.Göz Atlanacak Tablo no",
+      "3.Göz Atlanacak Tablo no",
+      "4.Göz Atlanacak Tablo no",
+      "5.Göz Atlanacak Tablo no",
+      "6.Göz Atlanacak Tablo no",
+      "Göz Seçili değilse Atlanacak tablo no",
+      "Atlanacak Satır no",
+    ],
+  },
+  {
+    code: "00250",
+    name: "GözSeçiliOlma",
+    description: "Göz Seçili olma durumuna göre atlanacak satırları belirlemek için kullanılır.",
+    params: [
+      "Göz Seçili olma durumu",
+      "Seçiliyse atlanacak Satır no",
+      "Seçili Değilse atlanacak Satır no",
+      NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00252",
+    name: "RFIDKontrol",
+    description: "RFID Sensör görme durumunda atlanacak satırları belirlemek için kullanılır.",
+    params: [
+      "Masa 1 RFID Görünce atlanacak satır no",
+      "Masa 2 RFID Görünce atlanacak satır no",
+      "Masa 3 RFID Görünce atlanacak satır no",
+      NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00253",
+    name: "JumpToStep",
+    description: "Bu komut ile istenilen bir adımda, adım numarasının değiştirilmesi sağlanır.\nFikstürlerin kapatılmasında, her seferinde işlem başlat butonuna basılmaması için sıklıkla kullanılmaktadır.",
+    params: [
+      "Gidilmesi gereken adım numarası yazılır.",
+      NA, NA, NA, NA, NA, NA, NA,
+    ],
+  },
+  {
+    code: "00255",
+    name: "END",
+    description: "Bu komutla, döngü belirli bir adımda tamamlanır. Bu komuta gelindiğinde, adım sayısı 1 olur ve PCCL, satır 1'e geri döner.",
+    params: [NA, NA, NA, NA, NA, NA, NA, NA],
+  },
+];

@@ -1,8 +1,8 @@
 {
 	"name": "afsa-pccl-server",
-	"description": "Example implementation of a language server in node.",
+	"description": "PCCL language server implementation.",
 	"version": "1.0.1",
-	"author": "Microsoft Corporation",
+	"author": "azizhanakbulut",
 	"license": "MIT",
 	"engines": {
 		"node": "*"

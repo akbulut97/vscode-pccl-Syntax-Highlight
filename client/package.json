@@ -1,7 +1,7 @@
 {
 	"name": "afsa-pccl-client",
-	"description": "VSCode part of a language server",
-	"author": "Microsoft Corporation",
+	"description": "PCCL VSCode extension client.",
+	"author": "azizhanakbulut",
 	"license": "MIT",
 	"version": "1.0.1",
 	"publisher": "vscode",
